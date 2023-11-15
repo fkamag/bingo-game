@@ -18,6 +18,15 @@ public class Bingo {
     String[] players = scannerPlayer.split("-");
 
     System.out.println(Arrays.deepToString(players));
+
+    String option = "";
+    while (!option.equals("1") && !option.equals("2")) {
+      System.out.println("Escolha a opção para gerar as cartelas");
+      System.out.println("1 - Cartelas Automáticas");
+      System.out.println("2 - Cartelas Manuais");
+      option = scanner.next();
+    }
+
   }
 
 }
