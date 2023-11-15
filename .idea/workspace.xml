@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="iniciando tela inicial">
+    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat menu cartelas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bingo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bingo.java" afterDir="false" />
     </list>
@@ -78,12 +78,30 @@
       <option name="project" value="LOCAL" />
       <updated>1700007388997</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="scanner players">
+      <option name="closed" value="true" />
+      <created>1700009198404</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700009198404</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat menu cartelas">
+      <option name="closed" value="true" />
+      <created>1700009418299</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700009418299</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="iniciando projeto" />
     <MESSAGE value="iniciando tela inicial" />
-    <option name="LAST_COMMIT_MESSAGE" value="iniciando tela inicial" />
+    <MESSAGE value="scanner players" />
+    <MESSAGE value="feat menu cartelas" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat menu cartelas" />
   </component>
 </project>
