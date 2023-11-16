@@ -28,28 +28,53 @@ public class Bingo {
 
     String cartela;
     int [][] cartelasPorJogador = new int[players.length][5];
+    int [] cartelaGerada = new int[5];
     int number;
     Random r = new Random();
 
     if (option.equals("1")) {
       for (int i = 0; i < players.length; i++) {
         for (int j = 0; j < 5; j++) {
-          number = r.nextInt(60)+1;
+          number = r.nextInt(6)+1;
           while (true) {
             boolean isDuplicate = false;
             for (int k = 0; k < 5; k++) {
-              if (cartelasPorJogador[i][k] == number) {
+              if (cartelaGerada[k] == number) {
                 isDuplicate = true;
                 break;
               }
             }
             if (isDuplicate) {
-              number = r.nextInt(60)+1;
+              number = r.nextInt(6)+1;
             } else {
               break;
             }
           }
-          cartelasPorJogador[i][j] = number;
+          cartelaGerada[j] = number;
+        }
+        Arrays.sort(cartelaGerada);
+        boolean isDuplicateCard = false;
+        if (i != 0) {
+          for (int j = 0; j <= i; j++) {
+            int counter = 0;
+            for (int k = 0; k < 5; k++) {
+              if (cartelasPorJogador[j][k] == cartelaGerada[k]) {
+                counter += 1;
+              } else {
+                break;
+              }
+            }
+            if (counter == 5) {
+              isDuplicateCard = true;
+              break;
+            }
+          }
+        }
+        if (!isDuplicateCard) {
+          cartelasPorJogador[i] = cartelaGerada;
+          cartelaGerada = new int[5];
+        } else {
+          i -= 1;
         }
       }
     } else {
