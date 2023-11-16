@@ -109,6 +109,40 @@ public class Bingo {
       }
       System.out.println();
     }
-  }
 
+    String optionRaffle = "";
+    while (!optionRaffle.equals("1") && !optionRaffle.equals("2")) {
+      System.out.println("-----------------------------------");
+      System.out.println("Vamos começar o sorteio, escolha a opção:");
+      System.out.println("1 - Sorteio Automático");
+      System.out.println("2 - Sorteio Manual");
+      optionRaffle = scanner.next();
+    }
+
+    int [] raffleNumbers = new int[5];
+
+    if (optionRaffle.equals("1")) {
+      for (int i = 0; i < 5; i++) {
+        number = r.nextInt(60)+1;
+        while (true) {
+          boolean isDuplicate = false;
+          for (int j = 0; j < 5; j++) {
+            if (raffleNumbers[j] == number) {
+              isDuplicate = true;
+              break;
+            }
+          }
+          if (isDuplicate) {
+            number = r.nextInt(60)+1;
+          } else {
+            break;
+          }
+        }
+        raffleNumbers[i] = number;
+      }
+      System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
+    } else {
+      System.out.println("Fazer sorteio Manual");
+    }
+  }
 }
