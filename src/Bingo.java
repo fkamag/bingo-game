@@ -35,7 +35,7 @@ public class Bingo {
     if (option.equals("1")) {
       for (int i = 0; i < players.length; i++) {
         for (int j = 0; j < 5; j++) {
-          number = r.nextInt(6)+1;
+          number = r.nextInt(60)+1;
           while (true) {
             boolean isDuplicate = false;
             for (int k = 0; k < 5; k++) {
@@ -45,7 +45,7 @@ public class Bingo {
               }
             }
             if (isDuplicate) {
-              number = r.nextInt(6)+1;
+              number = r.nextInt(60)+1;
             } else {
               break;
             }
@@ -98,8 +98,17 @@ public class Bingo {
         }
       }
     }
-    System.out.println(Arrays.deepToString(players));
-    System.out.println(Arrays.deepToString(cartelasPorJogador));
+    System.out.println();
+    System.out.println("-----------------------------------");
+    System.out.println("-----------Participantes-----------");
+    System.out.println("-----------------------------------");
+    for (int i = 0; i < players.length; i++) {
+      System.out.printf("%2d - %10s \t - ", i+1,players[i]);
+      for (int j=0; j < 5; j++) {
+        System.out.printf("%2d ", cartelasPorJogador[i][j]);
+      }
+      System.out.println();
+    }
   }
 
 }
