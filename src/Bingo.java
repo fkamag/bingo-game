@@ -98,6 +98,7 @@ public class Bingo {
         }
       }
     }
+
     System.out.println();
     System.out.println("-----------------------------------");
     System.out.println("-----------Participantes-----------");
@@ -119,28 +120,58 @@ public class Bingo {
       optionRaffle = scanner.next();
     }
 
-    int [] raffleNumbers = new int[5];
+    int [] allRaffleNumbers = new int[60];
+    int [][] correctNumbers = new int[players.length][5];
+
 
     if (optionRaffle.equals("1")) {
-      for (int i = 0; i < 5; i++) {
-        number = r.nextInt(60)+1;
-        while (true) {
-          boolean isDuplicate = false;
-          for (int j = 0; j < 5; j++) {
-            if (raffleNumbers[j] == number) {
-              isDuplicate = true;
+      boolean isContinue = true;
+      int round = 0;
+      while (isContinue) {
+        round += 1;
+        int indiceInicial = round * 5 - 5;
+        for (int i = 0; i < 5; i++) {
+          number = r.nextInt(60)+1;
+          while (true) {
+            boolean isDuplicate = false;
+            for (int j = 0; j < 60; j++) {
+              if (allRaffleNumbers[j] == number) {
+                isDuplicate = true;
+                break;
+              }
+            }
+            if (isDuplicate) {
+              number = r.nextInt(60)+1;
+            } else {
               break;
             }
           }
-          if (isDuplicate) {
-            number = r.nextInt(60)+1;
-          } else {
-            break;
+          allRaffleNumbers[indiceInicial] = number;
+          indiceInicial += 1;
+        }
+        System.out.println("Números sorteados: " + Arrays.toString(allRaffleNumbers));
+        for (int i = 0; i < players.length; i++) {
+          for (int j = 0; j < 5; j++) {
+            for (int allRaffleNumber : allRaffleNumbers) {
+              if (allRaffleNumber == 0) {
+                break;
+              }
+              if (allRaffleNumber == cartelasPorJogador[i][j]) {
+                correctNumbers[i][j] = 1;
+                break;
+              }
+            }
           }
         }
-        raffleNumbers[i] = number;
+        System.out.println(Arrays.deepToString(correctNumbers));
+
+        System.out.println("Digite 'X' para encerrar ou tecle 'enter' para continuar:");
+        String optionContinue = scanner.next();
+        if (optionContinue.equals("X")) {
+          isContinue = false;
+        }
       }
-      System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
+
     } else {
       System.out.println("Fazer sorteio Manual");
     }
