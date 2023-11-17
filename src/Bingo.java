@@ -149,6 +149,7 @@ public class Bingo {
           allRaffleNumbers[indiceInicial] = number;
           indiceInicial += 1;
         }
+        System.out.println("Rodada " + round);
         System.out.println("Números sorteados: " + Arrays.toString(allRaffleNumbers));
         for (int i = 0; i < players.length; i++) {
           for (int j = 0; j < 5; j++) {
@@ -164,14 +165,57 @@ public class Bingo {
           }
         }
         System.out.println(Arrays.deepToString(correctNumbers));
+        int [] hits = new int[players.length];
+        for (int i = 0; i < players.length; i++) {
+          int sum = 0;
+          for (int j = 0; j < 5; j++) {
+            sum += correctNumbers[i][j];
+          }
+          hits[i] = sum;
+        }
+        System.out.println(Arrays.toString(hits));
+        int valueFirst = 0;
+        int posFirst = 0;
+        int valueSecond = 0;
+        int posSecond = 0;
+        int valueThird = 0;
+        int posThird = 0;
+        for (int i = 0; i < hits.length; i++) {
+          if (hits[i] > valueFirst) {
+            posThird = posSecond;
+            valueThird = valueSecond;
+            posSecond = posFirst;
+            valueSecond = valueFirst;
+            posFirst = i;
+            valueFirst = hits[i];
+          } else if (hits[i] > valueSecond) {
+            posThird = posSecond;
+            valueThird = valueSecond;
+            posSecond = i;
+            valueSecond = hits[i];
+          } else if (hits[i] > valueThird) {
+            posThird = i;
+            valueThird = hits[i];
+          }
+        }
+        System.out.println("Primeiro colocado " + players[posFirst]);
+        if (players.length > 1) {
+          System.out.println("Segundo  colocado " + players[posSecond]);
+        }
+        if (players.length > 2) {
+          System.out.println("Terceiro colocado " + players[posThird]);
+        }
 
-        System.out.println("Digite 'X' para encerrar ou tecle 'enter' para continuar:");
-        String optionContinue = scanner.next();
-        if (optionContinue.equals("X")) {
-          isContinue = false;
+        String optionContinue = "";
+        while (!optionContinue.equals("c")) {
+          System.out.println("Digite 'x' para encerrar ou 'c' para continuar:");
+          optionContinue = scanner.next();
+          if (optionContinue.equals("x")) {
+            isContinue = false;
+            break;
+          }
         }
       }
-
     } else {
       System.out.println("Fazer sorteio Manual");
     }
