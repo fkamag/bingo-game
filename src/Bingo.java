@@ -127,9 +127,11 @@ public class Bingo {
     if (optionRaffle.equals("1")) {
       boolean isContinue = true;
       int round = 0;
+      int [] hits = new int[players.length];
       while (isContinue) {
         round += 1;
         int indiceInicial = round * 5 - 5;
+        int [] raffleNumbers = new int[5];
         for (int i = 0; i < 5; i++) {
           number = r.nextInt(60)+1;
           while (true) {
@@ -146,11 +148,12 @@ public class Bingo {
               break;
             }
           }
+          raffleNumbers[i] = number;
           allRaffleNumbers[indiceInicial] = number;
           indiceInicial += 1;
         }
         System.out.println("Rodada " + round);
-        System.out.println("Números sorteados: " + Arrays.toString(allRaffleNumbers));
+        System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
         for (int i = 0; i < players.length; i++) {
           for (int j = 0; j < 5; j++) {
             for (int allRaffleNumber : allRaffleNumbers) {
@@ -164,8 +167,6 @@ public class Bingo {
             }
           }
         }
-        System.out.println(Arrays.deepToString(correctNumbers));
-        int [] hits = new int[players.length];
         for (int i = 0; i < players.length; i++) {
           int sum = 0;
           for (int j = 0; j < 5; j++) {
@@ -173,37 +174,17 @@ public class Bingo {
           }
           hits[i] = sum;
         }
-        System.out.println(Arrays.toString(hits));
         int valueFirst = 0;
-        int posFirst = 0;
-        int valueSecond = 0;
-        int posSecond = 0;
-        int valueThird = 0;
-        int posThird = 0;
-        for (int i = 0; i < hits.length; i++) {
-          if (hits[i] > valueFirst) {
-            posThird = posSecond;
-            valueThird = valueSecond;
-            posSecond = posFirst;
-            valueSecond = valueFirst;
-            posFirst = i;
-            valueFirst = hits[i];
-          } else if (hits[i] > valueSecond) {
-            posThird = posSecond;
-            valueThird = valueSecond;
-            posSecond = i;
-            valueSecond = hits[i];
-          } else if (hits[i] > valueThird) {
-            posThird = i;
-            valueThird = hits[i];
+        for (int hit : hits) {
+          if (hit > valueFirst) {
+            valueFirst = hit;
           }
         }
-        System.out.println("Primeiro colocado " + players[posFirst]);
-        if (players.length > 1) {
-          System.out.println("Segundo  colocado " + players[posSecond]);
-        }
-        if (players.length > 2) {
-          System.out.println("Terceiro colocado " + players[posThird]);
+
+        showRanking(hits, players, 3);
+
+        if (valueFirst == 5) {
+          break;
         }
 
         String optionContinue = "";
@@ -216,8 +197,60 @@ public class Bingo {
           }
         }
       }
+      System.out.println();
+      System.out.println("*&*&*&*&*&*&*&*&*");
+      System.out.println("* * B I N G O * *");
+      System.out.println("*&*&*&*&*&*&*&*&*");
+      System.out.println();
+      System.out.println("Partida encerrada com " + round + " rodadas");
+      System.out.println();
+      int countRaffleNumbers = 0;
+      for (int allRaffleNumber : allRaffleNumbers) {
+        if (allRaffleNumber == 0) {
+          break;
+        }
+        countRaffleNumbers += 1;
+      }
+      System.out.println("Foram sorteados " + countRaffleNumbers + " números");
+      System.out.println();
+      System.out.println("Números Sorteados:");
+      for (int i = 0; i < countRaffleNumbers; i++) {
+        if (i % 5 == 0) {
+          System.out.println();
+        }
+        System.out.printf("%2d ", allRaffleNumbers[i]);
+      }
+      System.out.println();
+      System.out.println();
+      showRanking(hits, players, players.length);
     } else {
       System.out.println("Fazer sorteio Manual");
     }
+  }
+  public static void showRanking(int[] scores, String[] players, int positions) {
+    System.out.println("Ranking: ");
+    int[] ranks = getRanks(scores);
+    for (int i = 1; i <= positions; i++) {
+      for (int j=0; j < ranks.length; j++) {
+        if (i == ranks[j]) {
+          System.out.printf("%2dº lugar - %10s com %d acertos\n", i, players[j], scores[j]);
+        }
+      }
+    }
+  }
+
+  private static int[] getRanks(int[] scores) {
+    int n = scores.length;
+    int[][] scoreIndexPairs = new int[n][2];
+    for (int i = 0; i < n; i++) {
+      scoreIndexPairs[i][0] = scores[i];
+      scoreIndexPairs[i][1] = i;
+    }
+    Arrays.sort(scoreIndexPairs, (a, b) -> b[0] - a[0]);
+    int[] ranks = new int[n];
+    for (int i = 0; i < n; i++) {
+      ranks[scoreIndexPairs[i][1]] = i + 1;
+    }
+    return ranks;
   }
 }
