@@ -8,23 +8,9 @@ public class Bingo {
 
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println("--------------------");
-    System.out.println("      B I N G O     ");
-    System.out.println("--------------------");
-    System.out.println();
-    System.out.println("Digite o nome dos participantes separados por '-'"
-        + " e sem espaço: ");
-    String scannerPlayer = scanner.next();
-    System.out.println();
-    String[] players = scannerPlayer.split("-");
+    String[] players = inputPlayers(scanner);
 
-    String option = "";
-    while (!option.equals("1") && !option.equals("2")) {
-      System.out.println("Escolha a opção para gerar as cartelas");
-      System.out.println("1 - Cartelas Automáticas");
-      System.out.println("2 - Cartelas Manuais");
-      option = scanner.next();
-    }
+    String cardOption = cardMenu(scanner);
 
     String cartela;
     int [][] cartelasPorJogador = new int[players.length][5];
@@ -32,7 +18,7 @@ public class Bingo {
     int number;
     Random r = new Random();
 
-    if (option.equals("1")) {
+    if (cardOption.equals("1")) {
       for (int i = 0; i < players.length; i++) {
         for (int j = 0; j < 5; j++) {
           number = r.nextInt(60)+1;
@@ -227,6 +213,30 @@ public class Bingo {
       System.out.println("Fazer sorteio Manual");
     }
   }
+
+  private static String[] inputPlayers(Scanner scanner) {
+    System.out.println("-------------------------------------------------");
+    System.out.println(" B E M - V I N D O   A O   N O S S O   B I N G O  ");
+    System.out.println("-------------------------------------------------");
+    System.out.println();
+    System.out.println("Digite o nome dos participantes separados por '-'"
+        + " e sem espaço: ");
+    String scannerPlayer = scanner.next();
+    System.out.println();
+    return scannerPlayer.split("-");
+  }
+
+  private static String cardMenu(Scanner scanner) {
+    String cardOption = "";
+    while (!cardOption.equals("1") && !cardOption.equals("2")) {
+      System.out.println("Escolha a opção para gerar as cartelas");
+      System.out.println("1 - Cartelas Automáticas");
+      System.out.println("2 - Cartelas Manuais");
+      cardOption = scanner.next();
+    }
+    return cardOption;
+  }
+
   public static void showRanking(int[] scores, String[] players, int positions) {
     System.out.println("Ranking: ");
     int[] ranks = getRanks(scores);
