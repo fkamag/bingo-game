@@ -82,20 +82,14 @@ public class Bingo {
       System.out.println();
     }
 
-    String optionRaffle = "";
-    while (!optionRaffle.equals("1") && !optionRaffle.equals("2")) {
-      System.out.println("-----------------------------------");
-      System.out.println("Vamos começar o sorteio, escolha a opção:");
-      System.out.println("1 - Sorteio Automático");
-      System.out.println("2 - Sorteio Manual");
-      optionRaffle = scanner.next();
-    }
+    String raffleOption = "";
+    raffleOption = raffleMenu(raffleOption, scanner);
 
     int [] allRaffleNumbers = new int[60];
     int [][] correctNumbers = new int[players.length][5];
 
 
-    if (optionRaffle.equals("1")) {
+    if (raffleOption.equals("1")) {
       boolean isContinue = true;
       int round = 0;
       int [] hits = new int[players.length];
@@ -184,18 +178,46 @@ public class Bingo {
       }
       System.out.println("Foram sorteados " + countRaffleNumbers + " números");
       System.out.println();
-      System.out.println("Números Sorteados:");
-      for (int i = 0; i < countRaffleNumbers; i++) {
-        if (i % 5 == 0) {
-          System.out.println();
-        }
-        System.out.printf("%2d ", allRaffleNumbers[i]);
-      }
+      System.out.println("Números Sorteados por ordem de sorteio:");
+      showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
+      System.out.println();
+      Arrays.sort(allRaffleNumbers);
+      System.out.println();
+      System.out.println("Números Sorteados por ordem de números:");
+      showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
       System.out.println();
       System.out.println();
       showRanking(hits, players, players.length);
     } else {
       System.out.println("Fazer sorteio Manual");
+    }
+  }
+
+  private static String raffleMenu(String raffleOption, Scanner scanner) {
+    while (!raffleOption.equals("1") && !raffleOption.equals("2")) {
+      System.out.println("-----------------------------------");
+      System.out.println("Vamos começar o sorteio, escolha a opção:");
+      System.out.println("1 - Sorteio Automático");
+      System.out.println("2 - Sorteio Manual");
+      raffleOption = scanner.next();
+    }
+    return raffleOption;
+  }
+
+  private static void showRaffleNumbers(int countRaffleNumbers, int[] allRaffleNumbers) {
+    int[] drawnNumbers = new int[countRaffleNumbers];
+    int count = 0;
+    for (int number : allRaffleNumbers) {
+      if (number != 0) {
+        drawnNumbers[count] = number;
+        count += 1;
+      }
+    }
+    for (int i = 0; i < drawnNumbers.length; i++) {
+      if (i % 5 == 0) {
+        System.out.println();
+      }
+      System.out.printf("%2d ", drawnNumbers[i]);
     }
   }
 
