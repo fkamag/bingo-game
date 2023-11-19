@@ -16,27 +16,12 @@ public class Bingo {
     int [][] cartelasPorJogador = new int[players.length][5];
     int [] cartelaGerada = new int[5];
     int number;
-    Random r = new Random();
+    Random random = new Random();
 
     if (cardOption.equals("1")) {
       for (int i = 0; i < players.length; i++) {
         for (int j = 0; j < 5; j++) {
-          number = r.nextInt(60)+1;
-          while (true) {
-            boolean isDuplicate = false;
-            for (int k = 0; k < 5; k++) {
-              if (cartelaGerada[k] == number) {
-                isDuplicate = true;
-                break;
-              }
-            }
-            if (isDuplicate) {
-              number = r.nextInt(60)+1;
-            } else {
-              break;
-            }
-          }
-          cartelaGerada[j] = number;
+          cartelaGerada[j] = getNumber(cartelaGerada, random);
         }
         Arrays.sort(cartelaGerada);
         boolean isDuplicateCard = false;
@@ -119,7 +104,7 @@ public class Bingo {
         int indiceInicial = round * 5 - 5;
         int [] raffleNumbers = new int[5];
         for (int i = 0; i < 5; i++) {
-          number = r.nextInt(60)+1;
+          number = random.nextInt(60)+1;
           while (true) {
             boolean isDuplicate = false;
             for (int j = 0; j < 60; j++) {
@@ -129,7 +114,7 @@ public class Bingo {
               }
             }
             if (isDuplicate) {
-              number = r.nextInt(60)+1;
+              number = random.nextInt(60)+1;
             } else {
               break;
             }
@@ -235,6 +220,25 @@ public class Bingo {
       cardOption = scanner.next();
     }
     return cardOption;
+  }
+
+  private static int getNumber(int[] generatedCard, Random random) {
+    int number = random.nextInt(60)+1;
+    while (true) {
+      boolean isDuplicate = false;
+      for (int k = 0; k < 5; k++) {
+        if (generatedCard[k] == number) {
+          isDuplicate = true;
+          break;
+        }
+      }
+      if (isDuplicate) {
+        number = random.nextInt(60)+1;
+      } else {
+        break;
+      }
+    }
+    return number;
   }
 
   public static void showRanking(int[] scores, String[] players, int positions) {
