@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat método inputPlayer e inputCards">
+    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat método mostrar lista de participantes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bingo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bingo.java" afterDir="false" />
     </list>
@@ -207,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700508665669</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat método mostrar lista de participantes">
+      <option name="closed" value="true" />
+      <created>1700513453412</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1700513453412</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,6 +248,7 @@
     <MESSAGE value="feat final do bingo" />
     <MESSAGE value="feat método gerar card automaticamente" />
     <MESSAGE value="feat método inputPlayer e inputCards" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat método inputPlayer e inputCards" />
+    <MESSAGE value="feat método mostrar lista de participantes" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat método mostrar lista de participantes" />
   </component>
 </project>

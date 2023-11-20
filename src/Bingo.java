@@ -29,72 +29,16 @@ public class Bingo {
 
     int [] allRaffleNumbers = new int[60];
     int [][] correctNumbers = new int[players.length][5];
-
-
+    int round = 0;
+    int [] scores = new int[players.length];
+    
     if (raffleOption.equals("1")) {
-      boolean isContinue = true;
-      int randomNumber;
-      int round = 0;
-      int [] scores = new int[players.length];
-      while (isContinue) {
-        round += 1;
-        int indiceInicial = round * 5 - 5;
-        int [] raffleNumbers = new int[5];
-        for (int i = 0; i < 5; i++) {
-          randomNumber = getNumber(allRaffleNumbers, random);
-          raffleNumbers[i] = randomNumber;
-          allRaffleNumbers[indiceInicial] = randomNumber;
-          indiceInicial += 1;
-        }
-        System.out.println("Rodada " + round);
-        System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
-        for (int i = 0; i < players.length; i++) {
-          for (int j = 0; j < 5; j++) {
-            for (int allRaffleNumber : allRaffleNumbers) {
-              if (allRaffleNumber == 0) {
-                break;
-              }
-              if (allRaffleNumber == playersCards[i][j]) {
-                correctNumbers[i][j] = 1;
-                break;
-              }
-            }
-          }
-        }
-        for (int i = 0; i < players.length; i++) {
-          int sum = 0;
-          for (int j = 0; j < 5; j++) {
-            sum += correctNumbers[i][j];
-          }
-          scores[i] = sum;
-        }
-        int valueFirst = 0;
-        for (int score : scores) {
-          if (score > valueFirst) {
-            valueFirst = score;
-          }
-        }
-
-        showRanking(scores, players, 3);
-
-        if (valueFirst == 5) {
-          break;
-        }
-
-        String optionContinue = "";
-        while (!optionContinue.equals("c")) {
-          System.out.println("Digite 'x' para encerrar ou 'c' para continuar:");
-          optionContinue = scanner.next();
-          if (optionContinue.equals("x")) {
-            isContinue = false;
-            break;
-          }
-        }
-      }
-      endBingo(round, allRaffleNumbers, scores, players);
+      automaticDraw(round, allRaffleNumbers, random, players, playersCards,
+          correctNumbers, scores, scanner);
     } else {
       System.out.println("Fazer sorteio Manual");
     }
+    scanner.close();
   }
 
   private static String[] inputPlayers(Scanner scanner) {
@@ -223,6 +167,46 @@ public class Bingo {
     return isDuplicateCard;
   }
 
+  private static void automaticDraw(int round, int[] allRaffleNumbers,
+      Random random, String[] players, int[][] playersCards, int[][] correctNumbers, int[] scores,
+      Scanner scanner) {
+    boolean isContinue = true;
+    int randomNumber;
+    while (isContinue) {
+      round += 1;
+      int indiceInicial = round * 5 - 5;
+      int [] raffleNumbers = new int[5];
+      for (int i = 0; i < 5; i++) {
+        randomNumber = getNumber(allRaffleNumbers, random);
+        raffleNumbers[i] = randomNumber;
+        allRaffleNumbers[indiceInicial] = randomNumber;
+        indiceInicial += 1;
+      }
+      System.out.println("Rodada " + round);
+      System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
+      getCorrectNumbers(players, allRaffleNumbers, playersCards, correctNumbers);
+      getScores(players, correctNumbers, scores);
+      if (isBingo(scores, players)) {
+        break;
+      }
+      String optionContinue = "";
+      while (!optionContinue.equals("c")) {
+        System.out.println("Digite 'x' para encerrar ou 'c' para continuar:");
+        optionContinue = scanner.next();
+        if (optionContinue.equals("x")) {
+          isContinue = false;
+          break;
+        }
+      }
+    }
+    if (isContinue) {
+      endBingo(round, allRaffleNumbers, scores, players);
+    } else {
+      System.out.println("Partida encerrada pelo usuário");
+    }
+  }
+
+
   private static int getNumber(int[] generatedCard, Random random) {
     int randomNumber = random.nextInt(60)+1;
     while (true) {
@@ -240,6 +224,16 @@ public class Bingo {
       }
     }
     return randomNumber;
+  }
+
+  private static void getScores(String[] players, int[][] correctNumbers, int[] scores) {
+    for (int i = 0; i < players.length; i++) {
+      int sum = 0;
+      for (int j = 0; j < 5; j++) {
+        sum += correctNumbers[i][j];
+      }
+      scores[i] = sum;
+    }
   }
 
   private static void showRanking(int[] scores, String[] players, int positions) {
@@ -268,7 +262,35 @@ public class Bingo {
     }
     return ranks;
   }
-  
+
+  private static void getCorrectNumbers(String[] players, int[] allRaffleNumbers,
+      int[][] playersCards, int[][] correctNumbers) {
+    for (int i = 0; i < players.length; i++) {
+      for (int j = 0; j < 5; j++) {
+        for (int allRaffleNumber : allRaffleNumbers) {
+          if (allRaffleNumber == 0) {
+            break;
+          }
+          if (allRaffleNumber == playersCards[i][j]) {
+            correctNumbers[i][j] = 1;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  private static boolean isBingo(int[] scores, String[] players) {
+    int valueFirst = 0;
+    for (int score : scores) {
+      if (score > valueFirst) {
+        valueFirst = score;
+      }
+    }
+    showRanking(scores, players, 3);
+    return valueFirst == 5;
+  }
+
   private static void endBingo(int round, int[] allRaffleNumbers, int[] scores, String[] players) {
     System.out.println();
     System.out.println("*&*&*&*&*&*&*&*&*");
