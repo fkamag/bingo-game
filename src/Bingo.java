@@ -14,7 +14,6 @@ public class Bingo {
 
     int [][] playersCards = new int[players.length][5];
     int [] generatedCard = new int[5];
-    int number;
     Random random = new Random();
 
     if (cardOption.equals("1")) {
@@ -23,17 +22,7 @@ public class Bingo {
       inputCards(players, scanner, playersCards);
     }
 
-    System.out.println();
-    System.out.println("-----------------------------------");
-    System.out.println("-----------Participantes-----------");
-    System.out.println("-----------------------------------");
-    for (int i = 0; i < players.length; i++) {
-      System.out.printf("%2d - %10s \t - ", i+1,players[i]);
-      for (int j=0; j < 5; j++) {
-        System.out.printf("%2d ", playersCards[i][j]);
-      }
-      System.out.println();
-    }
+    showPlayers(players, playersCards);
 
     String raffleOption = "";
     raffleOption = raffleMenu(raffleOption, scanner);
@@ -44,6 +33,7 @@ public class Bingo {
 
     if (raffleOption.equals("1")) {
       boolean isContinue = true;
+      int randomNumber;
       int round = 0;
       int [] scores = new int[players.length];
       while (isContinue) {
@@ -51,23 +41,9 @@ public class Bingo {
         int indiceInicial = round * 5 - 5;
         int [] raffleNumbers = new int[5];
         for (int i = 0; i < 5; i++) {
-          number = random.nextInt(60)+1;
-          while (true) {
-            boolean isDuplicate = false;
-            for (int j = 0; j < 60; j++) {
-              if (allRaffleNumbers[j] == number) {
-                isDuplicate = true;
-                break;
-              }
-            }
-            if (isDuplicate) {
-              number = random.nextInt(60)+1;
-            } else {
-              break;
-            }
-          }
-          raffleNumbers[i] = number;
-          allRaffleNumbers[indiceInicial] = number;
+          randomNumber = getNumber(allRaffleNumbers, random);
+          raffleNumbers[i] = randomNumber;
+          allRaffleNumbers[indiceInicial] = randomNumber;
           indiceInicial += 1;
         }
         System.out.println("Rodada " + round);
@@ -167,6 +143,21 @@ public class Bingo {
       }
     }
   }
+
+  private static void showPlayers(String[] players, int[][] playersCards) {
+    System.out.println();
+    System.out.println("-----------------------------------");
+    System.out.println("-----------Participantes-----------");
+    System.out.println("-----------------------------------");
+    for (int i = 0; i < players.length; i++) {
+      System.out.printf("%2d - %10s \t - ", i+1, players[i]);
+      for (int j=0; j < 5; j++) {
+        System.out.printf("%2d ", playersCards[i][j]);
+      }
+      System.out.println();
+    }
+  }
+
   private static String raffleMenu(String raffleOption, Scanner scanner) {
     while (!raffleOption.equals("1") && !raffleOption.equals("2")) {
       System.out.println("-----------------------------------");
@@ -202,7 +193,6 @@ public class Bingo {
         generatedCard[j] = getNumber(generatedCard, random);
       }
       Arrays.sort(generatedCard);
-      System.out.println("entrei aqui");
       if (!isDuplicateCard(generatedCard, playersCards, i)) {
         playersCards[i] = generatedCard;
         generatedCard = new int[5];
@@ -234,22 +224,22 @@ public class Bingo {
   }
 
   private static int getNumber(int[] generatedCard, Random random) {
-    int number = random.nextInt(60)+1;
+    int randomNumber = random.nextInt(60)+1;
     while (true) {
       boolean isDuplicate = false;
-      for (int k = 0; k < 5; k++) {
-        if (generatedCard[k] == number) {
+      for (int number : generatedCard) {
+        if (number == randomNumber) {
           isDuplicate = true;
           break;
         }
       }
       if (isDuplicate) {
-        number = random.nextInt(60)+1;
+        randomNumber = random.nextInt(60)+1;
       } else {
         break;
       }
     }
-    return number;
+    return randomNumber;
   }
 
   private static void showRanking(int[] scores, String[] players, int positions) {
