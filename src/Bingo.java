@@ -12,34 +12,15 @@ public class Bingo {
 
     String cardOption = cardMenu(scanner);
 
-    String cartela;
-    int [][] cartelasPorJogador = new int[players.length][5];
-    int [] cartelaGerada = new int[5];
+    int [][] playersCards = new int[players.length][5];
+    int [] generatedCard = new int[5];
     int number;
     Random random = new Random();
 
     if (cardOption.equals("1")) {
-      automaticCard(players.length, cartelaGerada, random, cartelasPorJogador);
+      automaticCard(players.length, generatedCard, random, playersCards);
     } else {
-      System.out.println("Digite as cartelas utilizando o formato a seguir:");
-      System.out.println("1,2,3,4,5-6,7,8,9,1-2,3,4,5,6");
-      System.out.println("Seguindo a ordem dos participantes a baixo:");
-      for (String p : players) {
-        System.out.print(p + ", ");
-      }
-      System.out.println();
-      cartela = scanner.next();
-
-      String[] cartelas = cartela.split("-");
-
-      String[] nova;
-      for (int linha=0; linha< players.length; linha++) {
-        nova = cartelas[linha].split(",");
-        for (int coluna=0; coluna< 5; coluna++) {
-          number = Integer.parseInt(nova[coluna]);
-          cartelasPorJogador[linha][coluna] = number;
-        }
-      }
+      inputCards(players, scanner, playersCards);
     }
 
     System.out.println();
@@ -49,7 +30,7 @@ public class Bingo {
     for (int i = 0; i < players.length; i++) {
       System.out.printf("%2d - %10s \t - ", i+1,players[i]);
       for (int j=0; j < 5; j++) {
-        System.out.printf("%2d ", cartelasPorJogador[i][j]);
+        System.out.printf("%2d ", playersCards[i][j]);
       }
       System.out.println();
     }
@@ -64,7 +45,7 @@ public class Bingo {
     if (raffleOption.equals("1")) {
       boolean isContinue = true;
       int round = 0;
-      int [] hits = new int[players.length];
+      int [] scores = new int[players.length];
       while (isContinue) {
         round += 1;
         int indiceInicial = round * 5 - 5;
@@ -97,7 +78,7 @@ public class Bingo {
               if (allRaffleNumber == 0) {
                 break;
               }
-              if (allRaffleNumber == cartelasPorJogador[i][j]) {
+              if (allRaffleNumber == playersCards[i][j]) {
                 correctNumbers[i][j] = 1;
                 break;
               }
@@ -109,16 +90,16 @@ public class Bingo {
           for (int j = 0; j < 5; j++) {
             sum += correctNumbers[i][j];
           }
-          hits[i] = sum;
+          scores[i] = sum;
         }
         int valueFirst = 0;
-        for (int hit : hits) {
-          if (hit > valueFirst) {
-            valueFirst = hit;
+        for (int score : scores) {
+          if (score > valueFirst) {
+            valueFirst = score;
           }
         }
 
-        showRanking(hits, players, 3);
+        showRanking(scores, players, 3);
 
         if (valueFirst == 5) {
           break;
@@ -134,13 +115,58 @@ public class Bingo {
           }
         }
       }
-      endBingo(round, allRaffleNumbers, hits, players);
+      endBingo(round, allRaffleNumbers, scores, players);
     } else {
       System.out.println("Fazer sorteio Manual");
     }
   }
 
+  private static String[] inputPlayers(Scanner scanner) {
+    System.out.println("-------------------------------------------------");
+    System.out.println(" B E M - V I N D O   A O   N O S S O   B I N G O  ");
+    System.out.println("-------------------------------------------------");
+    System.out.println();
+    System.out.println("Digite o nome dos participantes separados por '-'"
+        + " e sem espaço: ");
+    String scannerPlayer = scanner.next();
+    System.out.println();
+    return scannerPlayer.split("-");
+  }
 
+  private static String cardMenu(Scanner scanner) {
+    String cardOption = "";
+    while (!cardOption.equals("1") && !cardOption.equals("2")) {
+      System.out.println("Escolha a opção para gerar as cartelas");
+      System.out.println("1 - Cartelas Automáticas");
+      System.out.println("2 - Cartelas Manuais");
+      cardOption = scanner.next();
+    }
+    return cardOption;
+  }
+
+  private static void inputCards(String[] players, Scanner scanner, int[][] playersCards) {
+    String cartela;
+    int number;
+    System.out.println("Digite as cartelas utilizando o formato a seguir:");
+    System.out.println("1,2,3,4,5-6,7,8,9,1-2,3,4,5,6");
+    System.out.println("Seguindo a ordem dos participantes a baixo:");
+    for (String p : players) {
+      System.out.print(p + ", ");
+    }
+    System.out.println();
+    cartela = scanner.next();
+
+    String[] cartelas = cartela.split("-");
+
+    String[] nova;
+    for (int linha=0; linha< players.length; linha++) {
+      nova = cartelas[linha].split(",");
+      for (int coluna=0; coluna< 5; coluna++) {
+        number = Integer.parseInt(nova[coluna]);
+        playersCards[linha][coluna] = number;
+      }
+    }
+  }
   private static String raffleMenu(String raffleOption, Scanner scanner) {
     while (!raffleOption.equals("1") && !raffleOption.equals("2")) {
       System.out.println("-----------------------------------");
@@ -169,53 +195,30 @@ public class Bingo {
     }
   }
 
-  private static String[] inputPlayers(Scanner scanner) {
-    System.out.println("-------------------------------------------------");
-    System.out.println(" B E M - V I N D O   A O   N O S S O   B I N G O  ");
-    System.out.println("-------------------------------------------------");
-    System.out.println();
-    System.out.println("Digite o nome dos participantes separados por '-'"
-        + " e sem espaço: ");
-    String scannerPlayer = scanner.next();
-    System.out.println();
-    return scannerPlayer.split("-");
-  }
-
-  private static String cardMenu(Scanner scanner) {
-    String cardOption = "";
-    while (!cardOption.equals("1") && !cardOption.equals("2")) {
-      System.out.println("Escolha a opção para gerar as cartelas");
-      System.out.println("1 - Cartelas Automáticas");
-      System.out.println("2 - Cartelas Manuais");
-      cardOption = scanner.next();
-    }
-    return cardOption;
-  }
-
-  private static void automaticCard(int players, int[] cartelaGerada, Random random,
-      int[][] cartelasPorJogador) {
+  private static void automaticCard(int players, int[] generatedCard, Random random,
+      int[][] playersCards) {
     for (int i = 0; i < players; i++) {
       for (int j = 0; j < 5; j++) {
-        cartelaGerada[j] = getNumber(cartelaGerada, random);
+        generatedCard[j] = getNumber(generatedCard, random);
       }
-      Arrays.sort(cartelaGerada);
+      Arrays.sort(generatedCard);
       System.out.println("entrei aqui");
-      if (!isDuplicateCard(cartelaGerada, cartelasPorJogador, i)) {
-        cartelasPorJogador[i] = cartelaGerada;
-        cartelaGerada = new int[5];
+      if (!isDuplicateCard(generatedCard, playersCards, i)) {
+        playersCards[i] = generatedCard;
+        generatedCard = new int[5];
       } else {
         i -= 1;
       }
     }
   }
 
-  private static boolean isDuplicateCard(int[] cartelaGerada, int[][] cartelasPorJogador, int i) {
+  private static boolean isDuplicateCard(int[] generatedCard, int[][] playersCards, int i) {
     boolean isDuplicateCard = false;
     if (i != 0) {
       for (int j = 0; j <= i; j++) {
         int counter = 0;
         for (int k = 0; k < 5; k++) {
-          if (cartelasPorJogador[j][k] == cartelaGerada[k]) {
+          if (playersCards[j][k] == generatedCard[k]) {
             counter += 1;
           } else {
             break;
@@ -276,7 +279,7 @@ public class Bingo {
     return ranks;
   }
   
-  private static void endBingo(int round, int[] allRaffleNumbers, int[] hits, String[] players) {
+  private static void endBingo(int round, int[] allRaffleNumbers, int[] scores, String[] players) {
     System.out.println();
     System.out.println("*&*&*&*&*&*&*&*&*");
     System.out.println("* * B I N G O * *");
@@ -302,6 +305,6 @@ public class Bingo {
     showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
     System.out.println();
     System.out.println();
-    showRanking(hits, players, players.length);
+    showRanking(scores, players, players.length);
   }
 }
