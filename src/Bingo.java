@@ -19,35 +19,7 @@ public class Bingo {
     Random random = new Random();
 
     if (cardOption.equals("1")) {
-      for (int i = 0; i < players.length; i++) {
-        for (int j = 0; j < 5; j++) {
-          cartelaGerada[j] = getNumber(cartelaGerada, random);
-        }
-        Arrays.sort(cartelaGerada);
-        boolean isDuplicateCard = false;
-        if (i != 0) {
-          for (int j = 0; j <= i; j++) {
-            int counter = 0;
-            for (int k = 0; k < 5; k++) {
-              if (cartelasPorJogador[j][k] == cartelaGerada[k]) {
-                counter += 1;
-              } else {
-                break;
-              }
-            }
-            if (counter == 5) {
-              isDuplicateCard = true;
-              break;
-            }
-          }
-        }
-        if (!isDuplicateCard) {
-          cartelasPorJogador[i] = cartelaGerada;
-          cartelaGerada = new int[5];
-        } else {
-          i -= 1;
-        }
-      }
+      automaticCard(players.length, cartelaGerada, random, cartelasPorJogador);
     } else {
       System.out.println("Digite as cartelas utilizando o formato a seguir:");
       System.out.println("1,2,3,4,5-6,7,8,9,1-2,3,4,5,6");
@@ -220,6 +192,44 @@ public class Bingo {
     return cardOption;
   }
 
+  private static void automaticCard(int players, int[] cartelaGerada, Random random,
+      int[][] cartelasPorJogador) {
+    for (int i = 0; i < players; i++) {
+      for (int j = 0; j < 5; j++) {
+        cartelaGerada[j] = getNumber(cartelaGerada, random);
+      }
+      Arrays.sort(cartelaGerada);
+      System.out.println("entrei aqui");
+      if (!isDuplicateCard(cartelaGerada, cartelasPorJogador, i)) {
+        cartelasPorJogador[i] = cartelaGerada;
+        cartelaGerada = new int[5];
+      } else {
+        i -= 1;
+      }
+    }
+  }
+
+  private static boolean isDuplicateCard(int[] cartelaGerada, int[][] cartelasPorJogador, int i) {
+    boolean isDuplicateCard = false;
+    if (i != 0) {
+      for (int j = 0; j <= i; j++) {
+        int counter = 0;
+        for (int k = 0; k < 5; k++) {
+          if (cartelasPorJogador[j][k] == cartelaGerada[k]) {
+            counter += 1;
+          } else {
+            break;
+          }
+        }
+        if (counter == 5) {
+          isDuplicateCard = true;
+          break;
+        }
+      }
+    }
+    return isDuplicateCard;
+  }
+
   private static int getNumber(int[] generatedCard, Random random) {
     int number = random.nextInt(60)+1;
     while (true) {
@@ -265,8 +275,7 @@ public class Bingo {
     }
     return ranks;
   }
-
-
+  
   private static void endBingo(int round, int[] allRaffleNumbers, int[] hits, String[] players) {
     System.out.println();
     System.out.println("*&*&*&*&*&*&*&*&*");
