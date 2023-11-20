@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat getNumber">
+    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat menu de sorteio">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bingo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bingo.java" afterDir="false" />
     </list>
@@ -175,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700432360259</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat menu de sorteio">
+      <option name="closed" value="true" />
+      <created>1700437666390</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1700437666390</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -204,6 +212,7 @@
     <MESSAGE value="fix forma de calculcar ranking e informações finais" />
     <MESSAGE value="fix input inicial e menu de cartelas para método" />
     <MESSAGE value="feat getNumber" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat getNumber" />
+    <MESSAGE value="feat menu de sorteio" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat menu de sorteio" />
   </component>
 </project>

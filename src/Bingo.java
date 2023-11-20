@@ -162,36 +162,12 @@ public class Bingo {
           }
         }
       }
-      System.out.println();
-      System.out.println("*&*&*&*&*&*&*&*&*");
-      System.out.println("* * B I N G O * *");
-      System.out.println("*&*&*&*&*&*&*&*&*");
-      System.out.println();
-      System.out.println("Partida encerrada com " + round + " rodadas");
-      System.out.println();
-      int countRaffleNumbers = 0;
-      for (int allRaffleNumber : allRaffleNumbers) {
-        if (allRaffleNumber == 0) {
-          break;
-        }
-        countRaffleNumbers += 1;
-      }
-      System.out.println("Foram sorteados " + countRaffleNumbers + " números");
-      System.out.println();
-      System.out.println("Números Sorteados por ordem de sorteio:");
-      showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
-      System.out.println();
-      Arrays.sort(allRaffleNumbers);
-      System.out.println();
-      System.out.println("Números Sorteados por ordem de números:");
-      showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
-      System.out.println();
-      System.out.println();
-      showRanking(hits, players, players.length);
+      endBingo(round, allRaffleNumbers, hits, players);
     } else {
       System.out.println("Fazer sorteio Manual");
     }
   }
+
 
   private static String raffleMenu(String raffleOption, Scanner scanner) {
     while (!raffleOption.equals("1") && !raffleOption.equals("2")) {
@@ -263,7 +239,7 @@ public class Bingo {
     return number;
   }
 
-  public static void showRanking(int[] scores, String[] players, int positions) {
+  private static void showRanking(int[] scores, String[] players, int positions) {
     System.out.println("Ranking: ");
     int[] ranks = getRanks(scores);
     for (int i = 1; i <= positions; i++) {
@@ -288,5 +264,35 @@ public class Bingo {
       ranks[scoreIndexPairs[i][1]] = i + 1;
     }
     return ranks;
+  }
+
+
+  private static void endBingo(int round, int[] allRaffleNumbers, int[] hits, String[] players) {
+    System.out.println();
+    System.out.println("*&*&*&*&*&*&*&*&*");
+    System.out.println("* * B I N G O * *");
+    System.out.println("*&*&*&*&*&*&*&*&*");
+    System.out.println();
+    System.out.println("Partida encerrada com " + round + " rodadas");
+    System.out.println();
+    int countRaffleNumbers = 0;
+    for (int allRaffleNumber : allRaffleNumbers) {
+      if (allRaffleNumber == 0) {
+        break;
+      }
+      countRaffleNumbers += 1;
+    }
+    System.out.println("Foram sorteados " + countRaffleNumbers + " números");
+    System.out.println();
+    System.out.println("Números Sorteados por ordem de sorteio:");
+    showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
+    System.out.println();
+    Arrays.sort(allRaffleNumbers);
+    System.out.println();
+    System.out.println("Números Sorteados por ordem de números:");
+    showRaffleNumbers(countRaffleNumbers, allRaffleNumbers);
+    System.out.println();
+    System.out.println();
+    showRanking(hits, players, players.length);
   }
 }
