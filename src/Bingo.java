@@ -36,7 +36,7 @@ public class Bingo {
       automaticDraw(round, allRaffleNumbers, random, players, playersCards,
           correctNumbers, scores, scanner);
     } else {
-      System.out.println("Fazer sorteio Manual");
+      manualDraw(round, allRaffleNumbers,players, playersCards, correctNumbers, scores, scanner);
     }
     scanner.close();
   }
@@ -65,7 +65,7 @@ public class Bingo {
   }
 
   private static void inputCards(String[] players, Scanner scanner, int[][] playersCards) {
-    String cartela;
+    String cards;
     int number;
     System.out.println("Digite as cartelas utilizando o formato a seguir:");
     System.out.println("1,2,3,4,5-6,7,8,9,1-2,3,4,5,6");
@@ -74,10 +74,9 @@ public class Bingo {
       System.out.print(p + ", ");
     }
     System.out.println();
-    cartela = scanner.next();
+    cards = scanner.next();
 
-    String[] cartelas = cartela.split("-");
-
+    String[] cartelas = cards.split("-");
     String[] nova;
     for (int linha=0; linha< players.length; linha++) {
       nova = cartelas[linha].split(",");
@@ -224,6 +223,49 @@ public class Bingo {
       }
     }
     return randomNumber;
+  }
+
+  private static void manualDraw(int round, int[] allRaffleNumbers, String[] players,
+      int[][] playersCards, int[][] correctNumbers, int[] scores, Scanner scanner) {
+    boolean isContinue = true;
+    String cards;
+    while (isContinue) {
+      round += 1;
+      int indiceInicial = round * 5 - 5;
+      int [] raffleNumbers = new int[5];
+      int number;
+      System.out.println("Digite os 5 números sorteados nesta rodada no seguinte formato: 1,2,3,4,5");
+      cards = scanner.next();
+      String[] nova = cards.split(",");
+      for (int i=0; i < 5; i++) {
+        number = Integer.parseInt(nova[i]);
+        raffleNumbers[i] = number;
+        allRaffleNumbers[indiceInicial] = number;
+        indiceInicial += 1;
+      }
+
+      System.out.println("Rodada " + round);
+      System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
+      getCorrectNumbers(players, allRaffleNumbers, playersCards, correctNumbers);
+      getScores(players, correctNumbers, scores);
+      if (isBingo(scores, players)) {
+        break;
+      }
+      String optionContinue = "";
+      while (!optionContinue.equals("c")) {
+        System.out.println("Digite 'x' para encerrar ou 'c' para continuar:");
+        optionContinue = scanner.next();
+        if (optionContinue.equals("x")) {
+          isContinue = false;
+          break;
+        }
+      }
+    }
+    if (isContinue) {
+      endBingo(round, allRaffleNumbers, scores, players);
+    } else {
+      System.out.println("Partida encerrada pelo usuário");
+    }
   }
 
   private static void getScores(String[] players, int[][] correctNumbers, int[] scores) {
