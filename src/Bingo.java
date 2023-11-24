@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Bingo {
 
   static Scanner scanner = new Scanner(System.in);
+  static Random random = new Random();
 
   public static void main(String[] args) {
 
@@ -14,10 +15,10 @@ public class Bingo {
 
     int [][] playersCards = new int[players.length][5];
     int [] generatedCard = new int[5];
-    Random random = new Random();
+
 
     if (cardOption.equals("1")) {
-      automaticCard(players.length, generatedCard, random, playersCards);
+      automaticCard(players.length, generatedCard, playersCards);
     } else {
       inputCards(players, playersCards);
     }
@@ -33,7 +34,7 @@ public class Bingo {
     int [] scores = new int[players.length];
     
     if (raffleOption.equals("1")) {
-      automaticDraw(round, allRaffleNumbers, random, players, playersCards,
+      automaticDraw(round, allRaffleNumbers, players, playersCards,
           correctNumbers, scores);
     } else {
       manualDraw(round, allRaffleNumbers,players, playersCards, correctNumbers, scores);
@@ -129,11 +130,11 @@ public class Bingo {
     }
   }
 
-  private static void automaticCard(int players, int[] generatedCard, Random random,
+  private static void automaticCard(int players, int[] generatedCard,
       int[][] playersCards) {
     for (int i = 0; i < players; i++) {
       for (int j = 0; j < 5; j++) {
-        generatedCard[j] = getNumber(generatedCard, random);
+        generatedCard[j] = getNumber(generatedCard);
       }
       Arrays.sort(generatedCard);
       if (!isDuplicateCard(generatedCard, playersCards, i)) {
@@ -167,7 +168,7 @@ public class Bingo {
   }
 
   private static void automaticDraw(int round, int[] allRaffleNumbers,
-      Random random, String[] players, int[][] playersCards, int[][] correctNumbers, int[] scores) {
+      String[] players, int[][] playersCards, int[][] correctNumbers, int[] scores) {
     boolean isContinue = true;
     int randomNumber;
     while (isContinue) {
@@ -175,7 +176,7 @@ public class Bingo {
       int indiceInicial = round * 5 - 5;
       int [] raffleNumbers = new int[5];
       for (int i = 0; i < 5; i++) {
-        randomNumber = getNumber(allRaffleNumbers, random);
+        randomNumber = getNumber(allRaffleNumbers);
         raffleNumbers[i] = randomNumber;
         allRaffleNumbers[indiceInicial] = randomNumber;
         indiceInicial += 1;
@@ -205,7 +206,7 @@ public class Bingo {
   }
 
 
-  private static int getNumber(int[] generatedCard, Random random) {
+  private static int getNumber(int[] generatedCard) {
     int randomNumber = random.nextInt(60)+1;
     while (true) {
       boolean isDuplicate = false;
