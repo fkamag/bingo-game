@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Bingo {
 
+  static Scanner scanner = new Scanner(System.in);
+
   public static void main(String[] args) {
 
-    Scanner scanner = new Scanner(System.in);
+    String[] players = inputPlayers();
 
-    String[] players = inputPlayers(scanner);
-
-    String cardOption = cardMenu(scanner);
+    String cardOption = cardMenu();
 
     int [][] playersCards = new int[players.length][5];
     int [] generatedCard = new int[5];
@@ -19,13 +19,13 @@ public class Bingo {
     if (cardOption.equals("1")) {
       automaticCard(players.length, generatedCard, random, playersCards);
     } else {
-      inputCards(players, scanner, playersCards);
+      inputCards(players, playersCards);
     }
 
     showPlayers(players, playersCards);
 
     String raffleOption = "";
-    raffleOption = raffleMenu(raffleOption, scanner);
+    raffleOption = raffleMenu(raffleOption);
 
     int [] allRaffleNumbers = new int[60];
     int [][] correctNumbers = new int[players.length][5];
@@ -34,14 +34,14 @@ public class Bingo {
     
     if (raffleOption.equals("1")) {
       automaticDraw(round, allRaffleNumbers, random, players, playersCards,
-          correctNumbers, scores, scanner);
+          correctNumbers, scores);
     } else {
-      manualDraw(round, allRaffleNumbers,players, playersCards, correctNumbers, scores, scanner);
+      manualDraw(round, allRaffleNumbers,players, playersCards, correctNumbers, scores);
     }
     scanner.close();
   }
 
-  private static String[] inputPlayers(Scanner scanner) {
+  private static String[] inputPlayers() {
     System.out.println("-------------------------------------------------");
     System.out.println(" B E M - V I N D O   A O   N O S S O   B I N G O  ");
     System.out.println("-------------------------------------------------");
@@ -53,7 +53,7 @@ public class Bingo {
     return scannerPlayer.split("-");
   }
 
-  private static String cardMenu(Scanner scanner) {
+  private static String cardMenu() {
     String cardOption = "";
     while (!cardOption.equals("1") && !cardOption.equals("2")) {
       System.out.println("Escolha a opção para gerar as cartelas");
@@ -64,7 +64,7 @@ public class Bingo {
     return cardOption;
   }
 
-  private static void inputCards(String[] players, Scanner scanner, int[][] playersCards) {
+  private static void inputCards(String[] players, int[][] playersCards) {
     String cards;
     int number;
     System.out.println("Digite as cartelas utilizando o formato a seguir:");
@@ -101,7 +101,7 @@ public class Bingo {
     }
   }
 
-  private static String raffleMenu(String raffleOption, Scanner scanner) {
+  private static String raffleMenu(String raffleOption) {
     while (!raffleOption.equals("1") && !raffleOption.equals("2")) {
       System.out.println("-----------------------------------");
       System.out.println("Vamos começar o sorteio, escolha a opção:");
@@ -167,8 +167,7 @@ public class Bingo {
   }
 
   private static void automaticDraw(int round, int[] allRaffleNumbers,
-      Random random, String[] players, int[][] playersCards, int[][] correctNumbers, int[] scores,
-      Scanner scanner) {
+      Random random, String[] players, int[][] playersCards, int[][] correctNumbers, int[] scores) {
     boolean isContinue = true;
     int randomNumber;
     while (isContinue) {
@@ -226,7 +225,7 @@ public class Bingo {
   }
 
   private static void manualDraw(int round, int[] allRaffleNumbers, String[] players,
-      int[][] playersCards, int[][] correctNumbers, int[] scores, Scanner scanner) {
+      int[][] playersCards, int[][] correctNumbers, int[] scores) {
     boolean isContinue = true;
     String cards;
     while (isContinue) {

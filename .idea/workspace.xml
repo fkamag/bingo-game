@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat método sorteio randomico">
+    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat método sorteio manual">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bingo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bingo.java" afterDir="false" />
     </list>
@@ -223,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700521840232</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="feat método sorteio manual">
+      <option name="closed" value="true" />
+      <created>1700535634646</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1700535634646</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,6 +266,7 @@
     <MESSAGE value="feat método inputPlayer e inputCards" />
     <MESSAGE value="feat método mostrar lista de participantes" />
     <MESSAGE value="feat método sorteio randomico" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat método sorteio randomico" />
+    <MESSAGE value="feat método sorteio manual" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat método sorteio manual" />
   </component>
 </project>
