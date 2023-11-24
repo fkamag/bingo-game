@@ -6,6 +6,9 @@ public class Bingo {
 
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
+  static final int NUMBERS_FOR_DRAW = 60;
+  static final int NUMBERS_PER_CARD = 5;
+  static final int NUMBERS_PER_DRAW = 5;
 
   public static void main(String[] args) {
 
@@ -13,8 +16,8 @@ public class Bingo {
 
     String cardOption = cardMenu();
 
-    int [][] playersCards = new int[players.length][5];
-    int [] generatedCard = new int[5];
+    int [][] playersCards = new int[players.length][NUMBERS_PER_CARD];
+    int [] generatedCard = new int[NUMBERS_PER_CARD];
 
 
     if (cardOption.equals("1")) {
@@ -28,8 +31,8 @@ public class Bingo {
     String raffleOption = "";
     raffleOption = raffleMenu(raffleOption);
 
-    int [] allRaffleNumbers = new int[60];
-    int [][] correctNumbers = new int[players.length][5];
+    int [] allRaffleNumbers = new int[NUMBERS_FOR_DRAW];
+    int [][] correctNumbers = new int[players.length][NUMBERS_PER_CARD];
     int round = 0;
     int [] scores = new int[players.length];
     
@@ -81,7 +84,7 @@ public class Bingo {
     String[] nova;
     for (int linha=0; linha< players.length; linha++) {
       nova = cartelas[linha].split(",");
-      for (int coluna=0; coluna< 5; coluna++) {
+      for (int coluna=0; coluna< NUMBERS_PER_CARD; coluna++) {
         number = Integer.parseInt(nova[coluna]);
         playersCards[linha][coluna] = number;
       }
@@ -139,7 +142,7 @@ public class Bingo {
       Arrays.sort(generatedCard);
       if (!isDuplicateCard(generatedCard, playersCards, i)) {
         playersCards[i] = generatedCard;
-        generatedCard = new int[5];
+        generatedCard = new int[NUMBERS_PER_CARD];
       } else {
         i -= 1;
       }
@@ -151,14 +154,14 @@ public class Bingo {
     if (i != 0) {
       for (int j = 0; j <= i; j++) {
         int counter = 0;
-        for (int k = 0; k < 5; k++) {
+        for (int k = 0; k < NUMBERS_PER_CARD; k++) {
           if (playersCards[j][k] == generatedCard[k]) {
             counter += 1;
           } else {
             break;
           }
         }
-        if (counter == 5) {
+        if (counter == NUMBERS_PER_CARD) {
           isDuplicateCard = true;
           break;
         }
@@ -173,13 +176,13 @@ public class Bingo {
     int randomNumber;
     while (isContinue) {
       round += 1;
-      int indiceInicial = round * 5 - 5;
-      int [] raffleNumbers = new int[5];
+      int InitialIndex = round * NUMBERS_PER_DRAW - NUMBERS_PER_DRAW;
+      int [] raffleNumbers = new int[NUMBERS_PER_DRAW];
       for (int i = 0; i < 5; i++) {
         randomNumber = getNumber(allRaffleNumbers);
         raffleNumbers[i] = randomNumber;
-        allRaffleNumbers[indiceInicial] = randomNumber;
-        indiceInicial += 1;
+        allRaffleNumbers[InitialIndex] = randomNumber;
+        InitialIndex += 1;
       }
       System.out.println("Rodada " + round);
       System.out.println("Números sorteados: " + Arrays.toString(raffleNumbers));
@@ -207,7 +210,7 @@ public class Bingo {
 
 
   private static int getNumber(int[] generatedCard) {
-    int randomNumber = random.nextInt(60)+1;
+    int randomNumber = random.nextInt(NUMBERS_FOR_DRAW)+1;
     while (true) {
       boolean isDuplicate = false;
       for (int number : generatedCard) {
@@ -217,7 +220,7 @@ public class Bingo {
         }
       }
       if (isDuplicate) {
-        randomNumber = random.nextInt(60)+1;
+        randomNumber = random.nextInt(NUMBERS_FOR_DRAW)+1;
       } else {
         break;
       }
@@ -231,17 +234,18 @@ public class Bingo {
     String cards;
     while (isContinue) {
       round += 1;
-      int indiceInicial = round * 5 - 5;
-      int [] raffleNumbers = new int[5];
+      int InitialIndex = round * NUMBERS_PER_DRAW - NUMBERS_PER_DRAW;
+      int [] raffleNumbers = new int[NUMBERS_PER_DRAW];
       int number;
-      System.out.println("Digite os 5 números sorteados nesta rodada no seguinte formato: 1,2,3,4,5");
+      System.out.println("Digite os 5 números sorteados nesta rodada no "
+          + "seguinte formato: 1,2,3,4,5");
       cards = scanner.next();
       String[] nova = cards.split(",");
       for (int i=0; i < 5; i++) {
         number = Integer.parseInt(nova[i]);
         raffleNumbers[i] = number;
-        allRaffleNumbers[indiceInicial] = number;
-        indiceInicial += 1;
+        allRaffleNumbers[InitialIndex] = number;
+        InitialIndex += 1;
       }
 
       System.out.println("Rodada " + round);
@@ -271,7 +275,7 @@ public class Bingo {
   private static void getScores(String[] players, int[][] correctNumbers, int[] scores) {
     for (int i = 0; i < players.length; i++) {
       int sum = 0;
-      for (int j = 0; j < 5; j++) {
+      for (int j = 0; j < NUMBERS_PER_CARD; j++) {
         sum += correctNumbers[i][j];
       }
       scores[i] = sum;
@@ -308,7 +312,7 @@ public class Bingo {
   private static void getCorrectNumbers(String[] players, int[] allRaffleNumbers,
       int[][] playersCards, int[][] correctNumbers) {
     for (int i = 0; i < players.length; i++) {
-      for (int j = 0; j < 5; j++) {
+      for (int j = 0; j < NUMBERS_PER_CARD; j++) {
         for (int allRaffleNumber : allRaffleNumbers) {
           if (allRaffleNumber == 0) {
             break;
@@ -330,7 +334,7 @@ public class Bingo {
       }
     }
     showRanking(scores, players, 3);
-    return valueFirst == 5;
+    return valueFirst == NUMBERS_PER_CARD;
   }
 
   private static void endBingo(int round, int[] allRaffleNumbers, int[] scores, String[] players) {

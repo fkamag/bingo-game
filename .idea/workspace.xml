@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="feat método sorteio manual">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a4f896d1-8419-482f-bf8d-12ab9947c3c2" name="Changes" comment="fix alterando random para utilizar globalmente">
       <change beforePath="$PROJECT_DIR$/src/Bingo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bingo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -231,7 +230,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700535634646</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fix alterando scanner para utilizar globalmente">
+      <option name="closed" value="true" />
+      <created>1700784418562</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1700784418562</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix alterando random para utilizar globalmente">
+      <option name="closed" value="true" />
+      <created>1700784768818</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1700784768818</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,6 +282,8 @@
     <MESSAGE value="feat método mostrar lista de participantes" />
     <MESSAGE value="feat método sorteio randomico" />
     <MESSAGE value="feat método sorteio manual" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat método sorteio manual" />
+    <MESSAGE value="fix alterando scanner para utilizar globalmente" />
+    <MESSAGE value="fix alterando random para utilizar globalmente" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix alterando random para utilizar globalmente" />
   </component>
 </project>
