@@ -19,7 +19,6 @@ public class Bingo {
     int [][] playersCards = new int[players.length][NUMBERS_PER_CARD];
     int [] generatedCard = new int[NUMBERS_PER_CARD];
 
-
     if (cardOption.equals("1")) {
       automaticCard(players.length, generatedCard, playersCards);
     } else {
